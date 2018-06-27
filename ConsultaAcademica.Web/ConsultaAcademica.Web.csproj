@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>4efe80c8-da45-4d82-bd5a-db60c8bc2ebf</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
+    <PackageReference Include="MySql.Data" Version="6.10.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConsultaAcademica.Core\ConsultaAcademica.Core.csproj" />
+    <ProjectReference Include="..\ConsultaAcademica.Model\ConsultaAcademica.Model.csproj" />
+    <ProjectReference Include="..\ConsultaAcademica.Service\ConsultaAcademica.Service.csproj" />
+  </ItemGroup>
+
+</Project>

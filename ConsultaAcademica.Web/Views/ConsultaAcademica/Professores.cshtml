@@ -1,0 +1,125 @@
+﻿@model PageDataViewModel<Professor>
+
+@{
+    ViewData["Title"] = "Professores";
+    var filterTypes = Html.GetEnumSelectList<FilterType>();
+}
+
+<h2> Professores </h2>
+
+<hr />
+
+<form method="POST" action="@Url.Action("Professores", "ConsultaAcademica")" style="margin-left:15px; height:100%; overflow-y:auto;">
+    <div class="row">
+        <div class="form-group" style="width:150px; float:left;">
+            <label class="control-label"> Filtrar por </label>
+
+            <select id="@Html.IdFor(m => m.FilterType)" name="@Html.IdFor(m => m.FilterType)" class="form-control">
+                <option value="0"> -- Selecione -- </option>
+                <option value="0"> Por Nome, CPF ou Matricula </option>
+                <option value="1"> Por Código </option>
+            </select>
+        </div>
+
+        <div class="form-group" style="width:55%; float:left; margin-left:10px;">
+            <label class="control-label"> Filtro </label>   <br />
+
+            @Html.TextBoxFor(m => m.FilteValue, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group" style="width:150px; float:left; margin-left:10px;">
+            <label class="control-label"> &nbsp; </label>   <br />
+
+            <button class="btn btn-primary" type="submit">
+                Filtrar
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <hr />
+
+        <b> Total de registros: </b> &nbsp; @Model.Total
+
+        <hr />
+    </div>
+
+    <table class="table" style="width:98%; height: 100%; display:table;">
+        <thead>
+            <tr>
+                <th scope="col"> Código </th>
+                <th scope="col"> Nome </th>
+                <th scope="col" style="width:80px;"> CPF </th>
+                <th scope="col"> Matricula </th>
+                <th scope="col"> E-mail </th>
+                <th scope="col"> Principal? </th>
+                <th scope="col"> Ativo? </th>
+                <th scope="col"> &nbsp; </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)
+            {
+            <tr>
+                <td> @item.IdProfessor </td>
+                <td> @item.ProfessorNome </td>
+                <td style="width:80px;"> @item.ProfessorCpf </td>
+                <td> @item.ProfessorMatricula </td>
+                <td> @item.ProfessorEmail </td>
+                <td> @(item.ProfessorPrincipal ? "Sim" : "Não") </td>
+                <td> @(item.AtivoProfessor ? "Sim" : "Não") </td>
+                <td>
+                    <button type="button" id="btn-disciplina" class="btn btn-primary" data-id="@item.IdProfessor" data-toggle="modal" data-target="#modalDisciplinas">
+                        Disciplinas
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="modalDisciplinas" tabindex="-1" role="dialog" aria-labelledby="modalDisciplinasLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Disciplinas</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <iframe id="frm-disciplinas" src="" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Ok
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        $(function () {
+            $('#modalDisciplinas').on('show.bs.modal', function (e) {
+                var button      = $(e.relatedTarget);
+                var id          = button.data('id');
+                var modal       = $(this);
+                var url         = "@Url.Action("DisciplinasProfessor", "ConsultaAcademica")";
+                var completeurl = url + "?id=" + id;
+                var height      = $('body').height() - 60;
+                var width       = $(window).width() - 60;
+
+                modal.find('.modal-dialog').height(height).width(width);
+                modal.find('.modal-body').height(height - 140).width(width - 29);
+                modal.find('#frm-disciplinas').attr('src', completeurl);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿html, body, .container {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.body-content {
+    float: left;
+    width: 83%;
+    height: 98.5%;
+    box-sizing: border-box;
+    padding-top: 60px;    
+}
+
+.sidebar {
+    height: 100%;
+    width: 200px;
+    float: left;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 5px;
+    padding: 0px;
+    padding-top: 60px;
+    background: #302e2e;
+}
+
+.sidebar-menu {
+    font-size: 1.2em;
+    padding: 10px;
+    color: #dbdbdb;
+    display: block;
+    padding: 5px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+form .row {
+    margin: 0px;
+}

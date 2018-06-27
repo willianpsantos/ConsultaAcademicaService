@@ -1,0 +1,67 @@
+﻿@{ 
+    Layout = null;
+}
+
+<environment include="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</environment>
+
+@model PageDataViewModel<Disciplina>
+
+<h3> <b> Total: </b> @Model.Data.Count() </h3>
+
+<table class="table" style="width:98%; height: 100%; display:table;">
+    <thead>
+        <tr>
+            <th scope="col"> Código </th>
+            <th scope="col"> Curso </th>
+            <th scope="col"> Disciplina </th>
+            <th scope="col"> Turma </th>
+            <th scope="col"> Professores </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td> @item.IdDisciplina </td>
+                <td> @item.CursoDescricao </td>
+                <td> @($"{item.DisciplinaNome} ({item.DisciplinaSigla})") </td>
+                <td> @item.TurmaSigla </td>
+                <td>
+                    @{ 
+                        string vinculos = "";
+
+                        if (item.VinculoProfessor?.Length > 0)
+                        {
+                            if (item.VinculoProfessor?.Length == 1)
+                            {
+                                vinculos = item.VinculoProfessor[0].ProfessorNome;
+                            }
+                            else
+                            {
+                                var last = item.VinculoProfessor?.Last();
+
+                                foreach (var vinculo in item.VinculoProfessor)
+                                {
+                                    if (vinculo.IdProfessor == last.IdProfessor)
+                                    {
+                                        vinculos += $"{vinculo.ProfessorNome}";
+                                    }
+                                    else
+                                    {
+                                        vinculos += $"{vinculo.ProfessorNome}, ";
+                                    }
+                                }
+                            }
+                        }
+                    }                    
+
+                    @vinculos
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
